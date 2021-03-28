@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  # React web
+  web:
+    build: frontend
+    ports:
+      - 3000:80
+    restart: always
+    depends_on:
+      - api
+  # API
+  api:
+    build: backend
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://mongo:27017/ExpenseDB
+  # MongoDB
+  mongo:
+    image: mongo:4.2
+    ports:
+      - 27017:27017
+    restart: always
